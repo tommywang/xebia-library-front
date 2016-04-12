@@ -1,19 +1,26 @@
-app.factory('getSelectedBooks', function() {
+app.factory('books', function() {
   var isbns = [];
   var hashs = [];
+  var books = [];
 
   return {
-    setIsbns: function(values) {
+    setSelectedIsbns: function(values) {
       isbns = values;
     },
-    setHashs: function(values) {
+    setSelectedHashs: function(values) {
       hashs = values;
     },
-    getIsbns: function() {
+    getSelectedIsbns: function() {
       return isbns;
     },
-    getHashs: function() {
+    getSelectedHashs: function() {
       return hashs;
+    },
+    setBooks: function(values){
+      books = values;
+    },
+    getBooks: function(){
+      return books;
     }
   }
 });
