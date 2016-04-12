@@ -1,0 +1,13 @@
+.site-title{
+  text-align: center;
+  text-decoration: none!important;
+  color: gray;
+  -moz-transition: color 0.3s ease;
+  -o-transition: color 0.3s ease;
+  -ms-transition: color 0.3s ease;
+  -webkit-transition: color 0.3s ease;
+  transition: color 0.3s ease;
+  &:hover{
+    color: black;
+  }
+}

@@ -8,14 +8,17 @@
 </div> -->
 
 <div class="row marketing">
-  <h4 class="row ">HTML5 Boilerplate</h4>
-  <p class="col-sm-12 col-md-6 col-lg-6">
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-  </p>
+  <h4 class="row ">Books</h4>
+  <div class="row books-container">
+     <div class="book col-md-3 col-lg-3 col-sm-6" ng-repeat="book in books">
+       <div class="cover" ng-style="{'background-image': 'url('+book.cover+')'}"></div>
+       <!--<img class="cover" ng-src="{{book.cover}}"/>-->
+       <span class="label label-primary">{{book.price}}</span>
+       <span class="label label-info">{{book.title}}</span>
+         <span>Add to cart</span>
+         <input type="checkbox" ng-model="selected[book.isbn]" />
+     </div>
 
-  <p class="col-sm-12 col-md-6 col-lg-6">
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
-
-  <p class="col-sm-12 col-md-6 col-lg-6">Spectacular Test Runner for JavaScript.</p>
+  </div>
+  <button ng-click="ShowSelected()">Go to cart</button>
 </div>

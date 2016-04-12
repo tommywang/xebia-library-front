@@ -3,6 +3,9 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 
+@import "header";
+@import "cart";
+
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
@@ -14,6 +17,23 @@ body {
   padding: 0;
 }
 
+.books-container{
+  .book{
+    margin-bottom: 20px;
+    .cover{
+      height: 330px;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center center;
+    }
+    .label{
+      display: inline-block;
+      float: left;
+      width: 100%;
+    }
+  }
+
+}
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,

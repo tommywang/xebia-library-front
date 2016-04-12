@@ -8,24 +8,26 @@
  * Controller of the xebiaLibraryFrontApp
  */
 angular.module('xebiaLibraryFrontApp')
-  .controller('MainCtrl', function ($scope, $http) {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-
+  .controller('MainCtrl', function ($scope, $http, $location, getSelectedBooks) {
+    $scope.books = [];
+    $scope.selectedBooks = [];
+    $scope.selected = {};
     $http({
       method: 'GET',
       url: 'http://henri-potier.xebia.fr/books'
     }).then(function successCallback(response) {
       console.log(response.data);
-      // this callback will be called asynchronously
-      // when the response is available
+      $scope.books = response.data;
     }, function errorCallback(response) {
-      // called asynchronously if an error occurs
-      // or server returns response with an error status.
+
     });
 
-
+    $scope.ShowSelected = function() {
+      $scope.selectedBooks = [];
+      angular.forEach($scope.selected, function(value, key) {
+        $scope.selectedBooks.push(key);
+      });
+      getSelectedBooks.setIsbns($scope.selectedBooks);
+      $location.path("cart");
+    };
   });

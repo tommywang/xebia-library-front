@@ -5,10 +5,10 @@ app.config(function ($routeProvider) {
       controller: 'MainCtrl',
       controllerAs: 'main'
     })
-    .when('/about', {
-      templateUrl: 'views/about.html',
-      controller: 'AboutCtrl',
-      controllerAs: 'about'
+    .when('/cart', {
+      templateUrl: 'views/cart.html',
+      controller: 'CartCtrl',
+      controllerAs: 'cart'
     })
     .otherwise({
       redirectTo: '/'
