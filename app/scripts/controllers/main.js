@@ -8,27 +8,29 @@
  * Controller of the xebiaLibraryFrontApp
  */
 angular.module('xebiaLibraryFrontApp')
-  .controller('MainCtrl', function ($scope, $http, $location, books) {
-    $scope.books = [];
-    $scope.selectedBooks = [];
-    $scope.selected = {};
+  .controller('MainCtrl', function ($http, $location, books) {
+    var vm = this;
+    vm.books = [];
+    vm.selectedBooks = [];
+    vm.selected = {};
     $http({
       method: 'GET',
       url: 'http://henri-potier.xebia.fr/books'
     }).then(function successCallback(response) {
-      console.log(response.data);
-      $scope.books = response.data;
-      books.setBooks($scope.books);
+      vm.books = response.data;
+      books.setBooks(vm.books);
     }, function errorCallback(response) {
 
     });
 
-    $scope.ShowSelected = function() {
-      $scope.selectedBooks = [];
-      angular.forEach($scope.selected, function(value, key) {
-        $scope.selectedBooks.push(key);
+    vm.ShowSelected = function() {
+      vm.selectedBooks = [];
+      angular.forEach(vm.selected, function(value, key) {
+        vm.selectedBooks.push(key);
       });
-      books.setSelectedIsbns($scope.selectedBooks);
+      books.setSelectedIsbns(vm.selectedBooks);
       $location.path("cart");
     };
+
+    return vm;
   });

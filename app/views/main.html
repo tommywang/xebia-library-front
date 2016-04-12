@@ -1,24 +1,15 @@
-<!-- <div class="jumbotron">
-  <h1>'Allo, 'Allo!</h1>
-  <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#/">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
-</div> -->
-
 <div class="row marketing">
   <h4 class="row ">Books</h4>
   <div class="row books-container">
-     <div class="book col-md-3 col-lg-3 col-sm-6" ng-repeat="book in books">
+     <div class="book col-md-3 col-lg-3 col-sm-6" ng-repeat="book in main.books">
        <div class="cover" ng-style="{'background-image': 'url('+book.cover+')'}"></div>
        <!--<img class="cover" ng-src="{{book.cover}}"/>-->
        <span class="label label-primary">{{book.price}}</span>
        <span class="label label-info">{{book.title}}</span>
          <span>Add to cart</span>
-         <input type="checkbox" ng-model="selected[book.isbn]" />
+         <input type="checkbox" ng-model="main.selected[book.isbn]" />
      </div>
 
   </div>
-  <button ng-click="ShowSelected()">Go to cart</button>
+  <button ng-click="main.ShowSelected()">Go to cart</button>
 </div>

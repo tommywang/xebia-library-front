@@ -8,36 +8,44 @@
  * Controller of the xebiaLibraryFrontApp
  */
 angular.module('xebiaLibraryFrontApp')
-  .controller('CartCtrl', function ($scope, $http, $location, books) {
-    $scope.books = books.getBooks();
-    $scope.selectedIsbns = books.getSelectedIsbns();
-    $scope.requestUrl = 'http://henri-potier.xebia.fr/books/'+$scope.selectedIsbns.join()+'/commercialOffers';
-    console.log($scope.requestUrl);
+  .controller('CartCtrl', function ($http, $location, books) {
+    var vm = this;
+    vm.books = books.getBooks();
+    vm.selectedIsbns = books.getSelectedIsbns();
+    vm.requestUrl = 'http://henri-potier.xebia.fr/books/'+vm.selectedIsbns.join()+'/commercialOffers';
+    vm.selectedBooks = [];
 
-    $http({
-      method: 'GET',
-      url: $scope.requestUrl
-    }).then(function successCallback(response) {
-      console.log(response.data);
-      $scope.offers = response.data.offers;
-      console.log($scope.getBestTotalPrice($scope.offers));
-    }, function errorCallback(response) {
+    vm.getOffers = function (){
+      $http({
+        method: 'GET',
+        url: vm.requestUrl
+      }).then(function successCallback(response) {
+        console.log(response.data);
+        vm.offers = response.data.offers;
+        console.log(vm.getBestTotalPrice(vm.offers));
+      }, function errorCallback(response) {
 
-    });
+      });
+    };
 
-    $scope.getTotal = function(){
+    vm.getSelectedBooks = function(){
+      angular.forEach(vm.selectedIsbns, function(value, key) {
+        var index = _.findIndex(vm.books, function(o) { return o.isbn == value; });
+        vm.selectedBooks.push(vm.books[index]);
+      });
+    };
+
+    vm.getTotal = function(){
       var total = 0;
-      angular.forEach($scope.selectedIsbns, function(value, key) {
-        var index = _.findIndex($scope.books, function(o) { return o.isbn == value; });
-        total +=  $scope.books[index].price;
+      angular.forEach(vm.selectedIsbns, function(value, key) {
+        var index = _.findIndex(vm.books, function(o) { return o.isbn == value; });
+        total +=  vm.books[index].price;
       });
       return total;
     };
 
-
-
-    $scope.getBestTotalPrice = function(offers){
-       var total = $scope.getTotal();
+    vm.getBestTotalPrice = function(offers){
+       var total = vm.getTotal();
       var price1, price2, price3;
       console.log('The price is ' + total);
       console.log('offer is ', offers);
@@ -56,5 +64,14 @@ angular.module('xebiaLibraryFrontApp')
         }
       });
       return Math.min(price1, price2, price3);
-    }
+    };
+
+    vm.init = function(){
+      vm.getOffers();
+      vm.getSelectedBooks();
+    };
+
+    vm.init();
+
+    return vm;
   });
