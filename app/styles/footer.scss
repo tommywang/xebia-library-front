@@ -1,8 +1,11 @@
 /* Custom page footer */
 .footer {
   bottom: 0;
-  position: absolute;
+  width: 100%;
+  position: fixed;
   padding-top: 19px;
   color: #777;
   border-top: 1px solid #e5e5e5;
+  background-color: #e5e5e5;
+  z-index: 10000;
 }

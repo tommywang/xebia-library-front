@@ -1,12 +1,14 @@
 <div class="row library animate-fadein ng-hide" ng-show="main.booksLoaded">
   <h4 class="row library-title">Harry Potter</h4>
   <div class="row books-container">
-    <div class="book col-md-3 col-lg-3 col-sm-6" ng-repeat="book in main.books">
+    <div class="book col-md-3 col-lg-3 col-sm-4" ng-repeat="book in main.books">
       <div class="cover" imageloaded="{{book.cover}}" ></div>
       <!--<img class="cover" ng-src="{{book.cover}}"/>-->
-      <span class="label label-primary">{{book.price}}</span>
-      <span class="label label-info">{{book.title}}</span>
-      <button type="button" class="btn"
+      <div class="book-info">
+        <span class="title">{{book.title}} </span>
+        <span class="label-price">PRICE: </span> <span class="price">{{book.price}}</span>
+      </div>
+      <button type="button" class="btn select-button"
               ng-class="{'btn-success selected': book.selected, 'btn-info': !book.selected}"
               ng-click="main.checkBook(book)"
               data-isbn="{{book.isbn}}">
@@ -14,6 +16,6 @@
       </button>
     </div>
   </div>
-  <button ng-click="main.ShowSelected()">Go to cart</button>
+  <button class="btn btn-danger go-to-cart" ng-click="main.ShowSelected()">Go to cart</button>
   <span class="bg-danger animate-fadein" ng-show="main.showWarningText">Please select at least one book!</span>
 </div>

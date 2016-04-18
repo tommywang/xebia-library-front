@@ -10,11 +10,19 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "cart";
 @import "mobile";
 
-.browsehappy {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.library,
+.footer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.library {
+  margin: 40px 0 60px;
+}
+.container {
+  max-width: 980px;
 }
 
 body {
@@ -25,6 +33,7 @@ body {
 
 .library-title{
   text-align: center;
+  font-size: 28px;
 }
 
 .bg-danger{
@@ -46,27 +55,43 @@ body {
       float: left;
       width: 100%;
     }
+    .book-info{
+      text-align: center;
+      display: block;
+      font-size: 16px;
+      .label-price{
+        font-weight: 800;
+        color: #8a6d3b;
+      }
+
+      .title{
+        display: block;
+        font-weight: bold;
+      }
+      .label{
+        width: auto;
+        padding: 8px;
+      }
+      .price{
+        line-height: 28px;
+        margin-left: 3px;
+      }
+    }
+    .select-button{
+      margin: 10px auto;
+      width: 100px;
+      position: relative;
+      display: block;
+      text-transform: uppercase;
+    }
   }
 }
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.library,
-.footer {
-  padding-left: 15px;
-  padding-right: 15px;
+.go-to-cart{
+  float: right;
 }
 
-.library {
-  margin: 40px 0;
 
-  p + h4 {
-    margin-top: 28px;
-  }
-}
-.container {
-    max-width: 980px;
-  }
 
 .animate-fadein{
   opacity: 1;
