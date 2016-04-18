@@ -13,6 +13,7 @@
       <div class="number-stepper input-group" min="0" max="1000000000" ng-model="book.number" number-stepper></div>
     </li>
   </ul>
+  <button class="finish-button btn btn-info" ng-click="cart.finishShopping()">Finish</button>
   <button class="update-button btn btn-danger" ng-click="cart.updateCart()">Update cart</button>
   <div class="result animate-fadein" ng-show="cart.showResult">
     Total price: {{cart.finalPrice}}

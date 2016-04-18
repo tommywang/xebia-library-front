@@ -25,3 +25,20 @@
     color: black;
   }
 }
+
+.server-indicator{
+  background-color: red;
+  width: 10px;
+  height: 10px;
+  position: relative;
+  margin-top: -30px;
+  /* margin-left: 60px; */
+  line-height: 10px;
+  float: right;
+  border-radius: 13px;
+  text-indent: -70px;
+  text-transform: uppercase;
+  &.connected{
+    background-color: green;
+  }
+}

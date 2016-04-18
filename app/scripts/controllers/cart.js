@@ -43,11 +43,11 @@ angular.module('xebiaLibraryFrontApp')
     };
 
     vm.getSelectedBooks = function(){
+      vm.selectedBooks = [];
       angular.forEach(vm.selectedIsbns, function(value, key) {
         var index = _.findIndex(vm.books, function(o) { return o.isbn == value; });
         vm.selectedBooks.push(vm.books[index]);
       });
-      socket.emit('selectedBooks', vm.selectedBooks);
     };
 
     vm.getTotal = function(){
@@ -89,6 +89,12 @@ angular.module('xebiaLibraryFrontApp')
     vm.init = function(){
       vm.getOffers();
       vm.getSelectedBooks();
+    };
+
+    vm.finishShopping = function(){
+      vm.getSelectedBooks;
+      socket.emit('selectedBooks', vm.selectedBooks);
+      $location.path("main");
     };
 
     vm.init();

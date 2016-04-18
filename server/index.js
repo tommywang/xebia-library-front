@@ -1,51 +1,77 @@
 var http = require('http'),
   express = require('express'),
-  path = require('path'),
-  Server = require('mongodb').Server,
-  config = require('./config');
-
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/xebia-library');
+  config = require('./config'),
+  mongoose = require('mongoose');
 var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log('mongodb connection success');
-  // we're connected!
-});
 var app = express();
 var server = http.createServer(app).listen(config.server.port, function(){
   console.log('Express server listening on port ' + '8080');
 });
+var io = require('socket.io').listen(server);
 
+//Create Model
 var bookSchema = mongoose.Schema({
   name: String,
   isbn: String,
   bought: Number
 });
 var Book = mongoose.model('Books', bookSchema);
+mongoose.connect('mongodb://localhost/xebia-library');
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('mongodb connection success');
+  seed();
+});
 
-// Chargement de socket.io
-var io = require('socket.io').listen(server);
 
-// Quand un client se connecte, on le note dans la console
 io.sockets.on('connection', function (socket) {
   console.log('a user connected');
+  //Save selected books
   socket.on('selectedBooks', function(books){
     for (var i in books) {
-      var bookToSave = new Book({ name: books[i].title, isbn: books[i].isbn, bought: 1 });
-      bookToSave.save(function (err) {
-        if (err) return console.error(err);
+      Book.findOneAndUpdate({ isbn: books[i].isbn }, {
+        $inc: { bought: books[i].number }
+      }).exec(function(err, db_res) {
+        if (err) {
+          throw err;
+        }
+        else {
+          console.log(db_res);
+        }
       });
     }
-    console.log(books);
   });
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
 });
 
+//Pre-save all books if they does not exists
+function seed(){
+  var url = 'http://henri-potier.xebia.fr/books';
+  http.get(url, function(res){
+    var body = '';
 
+    res.on('data', function(chunk){
+      body += chunk;
+    });
 
+    res.on('end', function(){
+      var books = JSON.parse(body);
+      for (var i in books) {
+        var bookToSave = new Book({ name: books[i].title, isbn: books[i].isbn, bought: 0});
+        Book.update({isbn: bookToSave.isbn},
+          {$setOnInsert : bookToSave},
+          {upsert: true}
+          , function(err, numberAffected, rawResponse) {
+            console.log(err);
+          })
+      }
+    });
+  }).on('error', function(e){
+    console.log("Got an error: ", e);
+  });
+}
 
 app.get('/', function (req, res) {
   res.send('<html><body><h1>Welcome to Xebia Library Server</h1></body></html>');
