@@ -5,7 +5,7 @@ var http = require('http'),
 var db = mongoose.connection;
 var app = express();
 var server = http.createServer(app).listen(config.server.port, function(){
-  console.log('Express server listening on port ' + '8080');
+  console.log('Express server listening on port ' + config.server.port);
 });
 var io = require('socket.io').listen(server);
 
@@ -16,7 +16,7 @@ var bookSchema = mongoose.Schema({
   bought: Number
 });
 var Book = mongoose.model('Books', bookSchema);
-mongoose.connect('mongodb://localhost/xebia-library');
+mongoose.connect(config.mongo.uri);
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log('mongodb connection success');

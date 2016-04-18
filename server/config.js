@@ -6,7 +6,7 @@ module.exports = {
 
   // MongoDB connection options
   mongo: {
-    uri: 'mongodb://localhost/xebiaexercicefront-dev'
+    uri: 'mongodb://localhost/xebia-library'
   },
 
   server:{
