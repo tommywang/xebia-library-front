@@ -1,12 +1,20 @@
 <div class="row cart">
-  <h4 class="row ">Books</h4>
+  <h4 class="row title">Selected Books</h4>
   <ul class="row books-container">
-    <li class="book" ng-repeat="book in cart.selectedBooks">
+    <li class="book row" ng-repeat="book in cart.selectedBooks">
       <div class="cover" ng-style="{'background-image': 'url('+book.cover+')'}"></div>
       <!--<img class="cover" ng-src="{{book.cover}}"/>-->
-      <span class="label label-primary">{{book.price}}</span>
-      <span class="label label-info">{{book.title}}</span>
-      <span>Add to cart</span>
+      <div class="book-info">
+        <span class="label label-info">Title: </span> {{book.title}}
+      </div>
+      <div class="book-info">
+        <span class="label label-primary">Price: </span> {{book.price}}
+      </div>
+      <div class="number-stepper input-group" min="0" max="1000000000" ng-model="book.number" number-stepper></div>
     </li>
   </ul>
+  <button class="update-button btn btn-danger" ng-click="cart.updateCart()">Update cart</button>
+  <div class="result animate-fadein" ng-show="cart.showResult">
+    Total price: {{cart.finalPrice}}
+  </div>
 </div>
