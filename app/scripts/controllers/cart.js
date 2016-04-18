@@ -8,7 +8,7 @@
  * Controller of the xebiaLibraryFrontApp
  */
 angular.module('xebiaLibraryFrontApp')
-  .controller('CartCtrl', function ($http, $location, books) {
+  .controller('CartCtrl', function ($http, $location, books, socket) {
     var vm = this;
     vm.books = books.getBooks();
     angular.forEach(vm.books, function(value, key) {
@@ -47,6 +47,7 @@ angular.module('xebiaLibraryFrontApp')
         var index = _.findIndex(vm.books, function(o) { return o.isbn == value; });
         vm.selectedBooks.push(vm.books[index]);
       });
+      socket.emit('selectedBooks', vm.selectedBooks);
     };
 
     vm.getTotal = function(){

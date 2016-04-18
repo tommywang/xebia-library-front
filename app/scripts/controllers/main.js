@@ -8,7 +8,7 @@
  * Controller of the xebiaLibraryFrontApp
  */
 angular.module('xebiaLibraryFrontApp')
-  .controller('MainCtrl', function ($http, $location, books) {
+  .controller('MainCtrl', function ($http, $location, books, socket) {
     var vm = this;
     vm.books = [];
     vm.selectedBooks = [];
