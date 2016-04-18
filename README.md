@@ -6,13 +6,15 @@ This an front test app of Xebia
 
 ## Build & development
 
-### Tested environnemnt: node v0.12.0 (npm v3.5.3)
+(Tested environnemnt: node v0.12.0 (npm v3.5.3))
 
 1. `npm install`
 2. `bower install`
 3. `grunt serve` should open a new window with `localhost:9000`
 4. `cd server`
 5. `node index.js` for launching the server, please replace the parameters in `/server/config.js` with your configuration 
+
+Go to `localhost:8080`, you can see how many books are sold.
 
 PS: If the server is on, the indicator in the header of the front page should become green.
 
