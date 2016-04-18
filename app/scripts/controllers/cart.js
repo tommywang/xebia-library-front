@@ -19,10 +19,12 @@ angular.module('xebiaLibraryFrontApp')
     vm.showResult = false;
     vm.finalPrice = 0;
 
+    //Get offers for selected books
     vm.getOffers = function (){
       var isbns = [];
       angular.forEach(vm.books, function(book, key) {
         if (vm.selectedIsbns.indexOf(book.isbn) !== -1){
+          //We can buy the same book more than once
           for (var i = 0; i < book.number; i++){
             isbns.push(book.isbn);
           }
@@ -33,7 +35,6 @@ angular.module('xebiaLibraryFrontApp')
         method: 'GET',
         url: requestUrl
       }).then(function successCallback(response) {
-        console.log(response.data);
         vm.offers = response.data.offers;
         vm.getBestTotalPrice(vm.offers);
         vm.showResult = true;
@@ -42,6 +43,7 @@ angular.module('xebiaLibraryFrontApp')
       });
     };
 
+    //Get selected books to show
     vm.getSelectedBooks = function(){
       vm.selectedBooks = [];
       angular.forEach(vm.selectedIsbns, function(value, key) {
@@ -50,6 +52,7 @@ angular.module('xebiaLibraryFrontApp')
       });
     };
 
+    //Get to total price before the reduction
     vm.getTotal = function(){
       var total = 0;
       angular.forEach(vm.selectedIsbns, function(value, key) {
@@ -60,26 +63,20 @@ angular.module('xebiaLibraryFrontApp')
     };
 
     vm.getBestTotalPrice = function(offers){
-       var total = vm.getTotal();
+      var total = vm.getTotal();
       var prices = [];
-      console.log('The price is ' + total);
-      console.log('offer is ', offers);
       angular.forEach(offers, function(offer, key) {
         if (offer.type === 'percentage'){
           prices.push(total * (100 - offer.value) / 100);
-          console.log('price1: ' , total * (100 - offer.value) / 100);
         }
         else if (offer.type === 'minus'){
           prices.push(total - offer.value);
-          console.log('price2: ' , total - offer.value);
         }
         else if (offer.type === 'slice'){
           prices.push(total - offer.value * Math.floor(total / offer.sliceValue));
-          console.log('price3: ' , total - offer.value * Math.floor(total / offer.sliceValue));
         }
       });
       vm.finalPrice = _.min(prices);
-      console.log('final price: ', vm.finalPrice);
     };
 
     vm.updateCart = function(){
@@ -91,6 +88,7 @@ angular.module('xebiaLibraryFrontApp')
       vm.getSelectedBooks();
     };
 
+    //This function are there just for update the server
     vm.finishShopping = function(){
       vm.getSelectedBooks;
       socket.emit('selectedBooks', vm.selectedBooks);

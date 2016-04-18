@@ -15,6 +15,8 @@ angular.module('xebiaLibraryFrontApp')
     vm.selected = {};
     vm.booksLoaded = false;
     vm.showWarningText = false;
+
+    //Get all books to show
     $http({
       method: 'GET',
       url: 'http://henri-potier.xebia.fr/books'
@@ -23,10 +25,10 @@ angular.module('xebiaLibraryFrontApp')
       books.setBooks(vm.books);
       vm.booksLoaded = true;
     }, function errorCallback(response) {
-
+       console.log(response);
     });
 
-    vm.ShowSelected = function() {
+    vm.saveSelectedBooks = function() {
       vm.selectedBooks = [];
       if (angular.element(".selected").length > 0){
         angular.forEach(angular.element(".selected"), function(value, key) {

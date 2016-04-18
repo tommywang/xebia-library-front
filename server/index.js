@@ -64,7 +64,7 @@ function seed(){
           {$setOnInsert : bookToSave},
           {upsert: true}
           , function(err, numberAffected, rawResponse) {
-            console.log(err);
+            //console.log(err);
           })
       }
     });
@@ -73,6 +73,18 @@ function seed(){
   });
 }
 
+//Show records
 app.get('/', function (req, res) {
-  res.send('<html><body><h1>Welcome to Xebia Library Server</h1></body></html>');
+  var output = '<html><body><h1>Welcome to Xebia Library Server</h1><ul>';
+  Book.find({}, function(err, books) {
+    books.forEach(function(book) {
+      output += '<li>';
+      output += '<div>'+book.name+'</div>';
+      output += '<div>'+book.isbn+'</div>';
+      output += '<div>'+book.bought+'</div>';
+      output += '</li>'
+    });
+    output += '</ul></body></html>';
+    res.send(output);
+  });
 });
